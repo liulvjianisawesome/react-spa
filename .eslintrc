@@ -1,0 +1,31 @@
+{
+    "extends": ["airbnb"],
+    "parserOptions": {
+        "ecmaVersion": 2016,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "settings": {
+        "import/parser": "babel-eslint",
+        "import/resolver": {
+            "webpack": {
+                // webpack 文件路径
+                "config": "webpack.config.js"
+            }
+        }
+    },
+    "rules": {
+        // 允许js后缀
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/forbid-prop-types": 0,
+        // 强制无分号
+        "semi": [2, "never"]
+    }
+}
