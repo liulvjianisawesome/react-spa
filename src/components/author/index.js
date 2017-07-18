@@ -1,26 +1,28 @@
-import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Route, Switch } from 'react-router-dom'
 import List from './List'
+import Edit from './Edit'
 
-class Author extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+function Author(props) {
+  const { url } = props.match
 
-  render() {
-    const { match } = this.props
+  return (
+    <Switch>
+      <Route path={`${url}/new`} component={Edit} />
+      <Route
+        path={`${url}/edit/:id`}
+        render={
+          ({ history, match }) => <Edit history={history} fetch={{ url: `/api/author/${match.params.id}` }} />
+        }
+      />
+      <Route path={url} component={List} />
+    </Switch>
+  )
+}
 
-    return (
-      <div>
-        <Route
-          exact
-          path={match.url}
-          render={() => <List fetch="/authorlist.json" />}
-        />
-      </div>
-    )
-  }
+Author.propTypes = {
+  match: PropTypes.object.isRequired,
 }
 
 export default Author
