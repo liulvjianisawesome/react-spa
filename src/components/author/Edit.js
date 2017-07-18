@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Form, FormControl, Message, Button } from 'rctui'
 import refetch from 'refetch'
-// import fetch from '_/hoc/fetch'
+import fetch from '_/hoc/fetch'
 
 class Edit extends Component {
   constructor(props) {
