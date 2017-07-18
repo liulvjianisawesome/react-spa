@@ -16,7 +16,7 @@ class Author extends Component {
         <Route
           exact
           path={match.url}
-          render={() => <List />}
+          render={() => <List fetch="/authorlist.json" />}
         />
       </div>
     )
