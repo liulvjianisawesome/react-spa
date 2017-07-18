@@ -37,6 +37,9 @@ router.get('**/react.min.js', async function (ctx) {
 router.get('**/react-dom.min.js', async function (ctx) {
   await send(ctx, 'demo/react-dom.js')
 })
+router.get('/authorlist.json', async function(ctx) {
+  await send(ctx, 'demo/authorlist.json')
+})
 
 router.get('**/*.js(on)?', async function (ctx) {
   ctx.redirect(`http://localhost:${DEVPORT}/${ctx.path}`)
