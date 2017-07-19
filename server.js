@@ -54,10 +54,7 @@ router.get('/api/author/:id', async function (ctx) {
   const authorlist = require('./demo/authorlist.json')
   const author = authorlist.data.list[id - 1]
   const authorData = require('./demo/author.json')
-  authorData.data.id = author.id
-  authorData.data.name = author.name
-  authorData.data.birthday = author.birthday
-  authorData.data.nationality = author.nationality
+  Object.assign(authorData.data, author)
   fs.writeFileSync('./demo/author.json', JSON.stringify(authorData))
   await send(ctx, './demo/author.json')
 })
