@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
+    "koa-bodyparser": "^4.2.0",
     "prop-types": "^15.5.10",
     "query-string": "^4.3.4",
     "rctui": "^0.7.18",
