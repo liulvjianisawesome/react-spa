@@ -41,34 +41,14 @@ router.get('**/react-dom.min.js', async function (ctx) {
   await send(ctx, 'demo/react-dom.js')
 })
 
+// CRUD 接口
+
+// 获取列表数据
 router.get('/api/authorlist', async function (ctx) {
   await send(ctx, 'demo/authorlist.json')
 })
-router.post('/api/author', async function (ctx) {
-  const authorData = ctx.request.body
-  const authorlist = require('./demo/authorlist.json')
-  let isNew = true
-  let curId = 0
-  authorlist.data.list.forEach((author) => {
-    curId++
-    if(author.name === authorData.name) {
-      author.name = authorData.name
-      author.birthday = authorData.birthday
-      author.nationality = authorData.nationality
-      isNew = false
-    }
-  })
-  if(isNew) {
-    authorlist.data.list.push({
-      id: curId + 1,
-      name: authorData.name,
-      birthday: authorData.birthday,
-      nationality: authorData.nationality,
-    })
-  }
-  fs.writeFileSync('./demo/authorlist.json', JSON.stringify(authorlist))
-  await send(ctx, './demo/authorlist.json')
-})
+
+// 根据id获取单条记录
 router.get('/api/author/:id', async function (ctx) {
   const id = ctx.params.id
   const authorlist = require('./demo/authorlist.json')
@@ -81,17 +61,35 @@ router.get('/api/author/:id', async function (ctx) {
   fs.writeFileSync('./demo/author.json', JSON.stringify(authorData))
   await send(ctx, './demo/author.json')
 })
-router.delete('/api/author', async function(ctx) {
-  const id = parseInt(ctx.request.body.id)
-  console.log(id)
+
+// 添加或编辑数据
+router.post('/api/author', async function (ctx) {
+  const authorData = ctx.request.body
   const authorlist = require('./demo/authorlist.json')
-  authorlist.data.list.forEach((author, index) => {
-    if(author.id > id) {
-      author.id--
-      authorlist.data.list[index - 1] = author
+  let isNew = true
+  let curId = 0
+  authorlist.data.list.forEach((author) => {
+    curId++
+    if(author.id == authorData.id) {
+      Object.assign(author, authorData)
+      isNew = false
     }
   })
-  authorlist.data.list.pop()
+  if(isNew) {
+    authorlist.data.list.push(Object.assign({}, { id: curId + 1 }, authorData))
+  }
+  fs.writeFileSync('./demo/authorlist.json', JSON.stringify(authorlist))
+  await send(ctx, './demo/authorlist.json')
+})
+
+// 删除一条数据
+router.delete('/api/author', async function(ctx) {
+  const id = parseInt(ctx.request.body.id)
+  const authorlist = require('./demo/authorlist.json')
+  authorlist.data.list.splice(id - 1, 1)
+  for( let i = id - 1; i < authorlist.data.list.length; i++) {
+    authorlist.data.list[i].id--
+  }
   fs.writeFileSync('./demo/authorlist.json', JSON.stringify(authorlist))
   await send(ctx, './demo/authorlist.json')
 })
