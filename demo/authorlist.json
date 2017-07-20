@@ -9,6 +9,12 @@
         "name": "毛哥",
         "birthday": "2017-07-05",
         "nationality": "瘦的不行"
+      },
+      {
+        "id": 2,
+        "name": "厂长",
+        "birthday": "2017-07-10",
+        "nationality": "养猪场"
       }
     ]
   }

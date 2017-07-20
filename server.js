@@ -129,6 +129,24 @@ router.delete('/api/genre', async function (ctx) {
   await send(ctx, './demo/1.json')
 })
 
+// book CRUD 接口
+// 获得列表数据
+router.get('/api/booklist', async function (ctx) {
+  await send(ctx, './demo/booklist.json')
+})
+
+
+// 获取单条数据
+router.get('/api/book/:id', async function (ctx) {
+  const id = ctx.params.id
+  const booklist = require('./demo/booklist.json')
+  const book = booklist.data.list[id - 1]
+  const bookData = require('./demo/book.json')
+  Object.assign(bookData.data, book)
+  fs.writeFileSync('./demo/book.json', JSON.stringify(bookData))
+  await send(ctx, './demo/book.json')
+})
+
 
 
 
