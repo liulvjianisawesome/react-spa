@@ -41,7 +41,7 @@ router.get('**/react-dom.min.js', async function (ctx) {
   await send(ctx, 'demo/react-dom.js')
 })
 
-// CRUD 接口
+// author CRUD 接口
 
 // 获取列表数据
 router.get('/api/authorlist', async function (ctx) {
@@ -67,12 +67,12 @@ router.post('/api/author', async function (ctx) {
   let curId = 0
   authorlist.data.list.forEach((author) => {
     curId++
-    if(author.id == authorData.id) {
+    if (author.id == authorData.id) {
       Object.assign(author, authorData)
       isNew = false
     }
   })
-  if(isNew) {
+  if (isNew) {
     authorlist.data.list.push(Object.assign({}, { id: curId + 1 }, authorData))
   }
   fs.writeFileSync('./demo/authorlist.json', JSON.stringify(authorlist))
@@ -80,16 +80,57 @@ router.post('/api/author', async function (ctx) {
 })
 
 // 删除一条数据
-router.delete('/api/author', async function(ctx) {
+router.delete('/api/author', async function (ctx) {
   const id = parseInt(ctx.request.body.id)
   const authorlist = require('./demo/authorlist.json')
   authorlist.data.list.splice(id - 1, 1)
-  for( let i = id - 1; i < authorlist.data.list.length; i++) {
+  for (let i = id - 1; i < authorlist.data.list.length; i++) {
     authorlist.data.list[i].id--
   }
   fs.writeFileSync('./demo/authorlist.json', JSON.stringify(authorlist))
   await send(ctx, './demo/authorlist.json')
 })
+
+// genre CRUD 接口
+// 获得列表数据
+router.get('/api/genres', async function (ctx) {
+  await send(ctx, './demo/genrelist.json')
+})
+
+// 添加或编辑数据
+router.post('/api/genre', async function (ctx) {
+  const genreData = ctx.request.body
+  const genrelist = require('./demo/genrelist.json')
+  let isNew = true
+  let curId = 0
+  genrelist.data.forEach((genre) => {
+    curId++
+    if (genre.name == genreData.name) {
+      Object.assign(genre, genreData)
+      isNew = false
+    }
+  })
+  if (isNew) {
+    genrelist.data.push(Object.assign({}, { id: curId + 1 }, genreData))
+  }
+  fs.writeFileSync('./demo/genrelist.json', JSON.stringify(genrelist))
+  await send(ctx, './demo/genrelist.json')
+})
+
+// 删除数据
+router.delete('/api/genre', async function (ctx) {
+  const id = parseInt(ctx.request.body.id)
+  const genrelist = require('./demo/genrelist.json')
+  genrelist.data.splice(id - 1, 1)
+  for (let i = id - 1; i < genrelist.data.length; i++) {
+    genrelist.data[i].id--
+  }
+  fs.writeFileSync('./demo/genrelist.json', JSON.stringify(genrelist))
+  await send(ctx, './demo/1.json')
+})
+
+
+
 
 router.get('**/*.js(on)?', async function (ctx) {
   ctx.redirect(`http://localhost:${DEVPORT}/${ctx.path}`)

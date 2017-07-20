@@ -17,16 +17,8 @@ function List(props) {
       <Table
         data={data}
         columns={[
-          {
-            name: 'id',
-            width: 100,
-            header: 'ID',
-            sort: [
-              (a, b) => (parseInt(a.id, 10) > parseInt(b.id, 10) ? 1 : -1),
-              (a, b) => (parseInt(a.id, 10) < parseInt(b.id, 10) ? 1 : -1),
-            ],
-          },
-          { name: 'name', width: 160, header: '名称', sort: true },
+          { name: 'id', width: 100, header: 'ID' },
+          { name: 'name', width: 160, header: '名称' },
           { name: 'desc', header: '简介' },
           {
             width: '120px',

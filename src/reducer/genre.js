@@ -2,7 +2,7 @@ import { GENRE_LIST } from '_/actions/genre'
 
 const defaultState = {
   status: 0,
-  data: undefined,
+  data: [],
 }
 export default function (state = defaultState, action) {
   switch (action.type) {

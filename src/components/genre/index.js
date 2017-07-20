@@ -22,8 +22,7 @@ class Genre extends Component {
     const { genre } = this.props
 
     // 这里没有从服务端获取，而是从list里面获取的单条数据
-    const data = genre.data.find(d => d.id === match.params.id)
-
+    const data = genre.data.find(d => d.id == match.params.id)
     return <Edit history={history} data={data} />
   }
 
@@ -45,7 +44,7 @@ class Genre extends Component {
         <Route path={`${url}/edit/:id`} render={this.renderEdit} />
         <Route
           path={url}
-          render={() => <List histoty={history} data={genre.data} />}
+          render={() => <List history={history} data={genre.data} />}
         />
       </Switch>
     )

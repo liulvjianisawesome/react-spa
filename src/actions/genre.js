@@ -18,7 +18,7 @@ function fetchList() {
     dispatch(handleList(0))
     refetch.get('/api/genres', { size: 999 }).then((res) => {
       if (res.data) {
-        dispatch(handleList(1, res.data.list))
+        dispatch(handleList(1, res.data))
       } else {
         dispatch(handleList(2, null, res.error))
       }
@@ -44,17 +44,12 @@ export function getGenreList() {
 
 // 保存数据接口
 export function saveGenre(body, onSuccess) {
-  return (dispatch, getState) => {
-    refetch.post('/api/genre', body, { dataType: 'json' }).then((res) => {
+  return (dispatch) => {
+    refetch.post('/api/genre', body).then((res) => {
       if (res.data) {
         onSuccess()
 
-        // 如果是修改，从数组里把原数据剔除
-        const data = getState().genre.data.filter(d => d.id !== res.data.id)
-
-
-        data.unshift(res.data)
-        dispatch(handleList(1, data))
+        dispatch(handleList(1, res.data))
 
         Message.success('保存成功')
       } else {
@@ -73,7 +68,10 @@ export function removeGenre(id) {
       if (res.data === 1) {
         Message.success('删除成功')
 
-        const data = getState().genre.data.filter(d => d.id !== res.data.id)
+        const data = getState().genre.data.filter(d => d.id !== id)
+        data.forEach((genre, index) => {
+          genre.id = (index + 1)
+        })
 
         dispatch(handleList(1, data))
       }

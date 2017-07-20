@@ -12,7 +12,7 @@ class Edit extends Component {
   }
 
   handleSubmit(data) {
-    this.props.dispatch(saveGenre(data, this.props.history.goBack()))
+    this.props.dispatch(saveGenre(data, this.props.history.goBack))
   }
 
   handleCancel() {
