@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom'
 
 import Author from '_/components/author'
-import Category from '_/components/category'
+import Genre from '_/components/genre'
 import Book from '_/components/book'
 
 import _styles from '_/styles/index.scss'
@@ -22,13 +22,13 @@ class App extends Component {
 
           <div className={_menu.container}>
             <NavLink to="/author">作者</NavLink>
-            <NavLink to="/category">分类</NavLink>
+            <NavLink to="/genre">分类</NavLink>
             <NavLink to="/book">书籍</NavLink>
           </div>
 
           <div className={_styles.main}>
             <Route path="/author" component={Author} />
-            <Route path="/category" component={Category} />
+            <Route path="/genre" component={Genre} />
             <Route path="/book" component={Book} />
           </div>
         </div>

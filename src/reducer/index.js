@@ -1,4 +1,4 @@
-import combineReducers from 'react-redux'
+import { combineReducers } from 'redux'
 import genre from './genre'
 
 export default combineReducers({
