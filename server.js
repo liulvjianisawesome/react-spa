@@ -147,6 +147,26 @@ router.get('/api/book/:id', async function (ctx) {
   await send(ctx, './demo/book.json')
 })
 
+// 添加或编辑数据
+router.post('/api/book', async function (ctx) {
+  const bookData = ctx.request.body
+  const booklist = require('./demo/booklist.json')
+  let isNew = true
+  let curId = 0
+  booklist.data.list.forEach((book) => {
+    curId++
+    if (book.id == bookData.id) {
+      Object.assign(book, bookData)
+      isNew = false
+    }
+  })
+  if (isNew) {
+    booklist.data.list.push(Object.assign({}, { id: curId + 1 }, bookData))
+  }
+  fs.writeFileSync('./demo/booklist.json', JSON.stringify(booklist))
+  await send(ctx, './demo/booklist.json')
+})
+
 
 
 
